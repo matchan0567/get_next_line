@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myazawa <myazawa@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 22:33:03 by myazawa           #+#    #+#             */
-/*   Updated: 2026/06/24 21:46:23 by myazawa          ###   ########.fr       */
+/*   Updated: 2026/07/01 18:10:30 by mumei            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int		ft_strlen(char *str);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin_free(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strdup(const char *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr_free(char *s, unsigned int start, size_t len);
+char	*ft_strdup(char *s);
 #endif

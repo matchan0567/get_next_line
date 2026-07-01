@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myazawa <myazawa@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 21:17:17 by myazawa           #+#    #+#             */
-/*   Updated: 2026/06/24 21:46:25 by myazawa          ###   ########.fr       */
+/*   Updated: 2026/07/01 18:10:21 by mumei            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin_free(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	char	*str;
@@ -60,12 +60,10 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		i++;
 	}
 	str[i] = '\0';
-	free(s1);
-	free(s2);
 	return (str);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr_free(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -87,10 +85,11 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = '\0';
+	free(s);
 	return (str);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*str;
 	int		i;
