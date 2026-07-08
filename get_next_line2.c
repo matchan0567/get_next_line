@@ -6,7 +6,7 @@
 /*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 18:23:26 by myazawa           #+#    #+#             */
-/*   Updated: 2026/07/01 18:25:57 by mumei            ###   ########.fr       */
+/*   Updated: 2026/07/08 17:27:32 by mumei            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ char	*get_next_line(int fd)
 		{
 			tmp = ft_strdup(save);
 			free(save);
-			str = ft_substr_free(tmp, 0, ft_strlen(ft_strchr(tmp, '\n')) + 1);
-			save = ft_substr_free(tmp, ft_strlen(ft_strchr(tmp, '\n')) + 1,
-					ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')) - 1);
+			str = ft_substr_free(tmp, 0, ft_strlen(tmp)
+					- ft_strlen(ft_strchr(tmp, '\n')) + 1);
+			save = ft_substr_free(tmp, ft_strlen(ft_strchr(tmp, '\n')),
+					ft_strlen(ft_strchr(tmp, '\n')) - 1);
 			return (str);
 		}
 		else
 		{
 			tmp = ft_strdup(save);
 			free(save);
+			save = NULL;
 		}
 	}
 	else
@@ -71,8 +73,9 @@ char	*get_next_line(int fd)
 	if (byts == 0)
 		return (str);
 	tmp = str;
-	str = ft_substr_free(tmp, 0, ft_strlen(ft_strchr(tmp, '\n')) + 1);
-	save = ft_substr_free(tmp, ft_strlen(ft_strchr(tmp, '\n')) + 1,
-			ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')) - 1);
+	str = ft_substr_free(tmp, 0, ft_strlen(tmp) 
+			- ft_strlen(ft_strchr(tmp,'\n')) + 1);
+	save = ft_substr_free(tmp, ft_strlen(ft_strchr(tmp, '\n')),
+			ft_strlen(ft_strchr(tmp, '\n')) - 1);
 	return (str);
 }

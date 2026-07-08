@@ -6,7 +6,7 @@
 /*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 21:17:17 by myazawa           #+#    #+#             */
-/*   Updated: 2026/07/01 18:10:21 by mumei            ###   ########.fr       */
+/*   Updated: 2026/07/08 17:46:21 by mumei            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	int		i;
 	char	*str;
@@ -60,6 +60,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	str[i] = '\0';
+	free(s1);
 	return (str);
 }
 

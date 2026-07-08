@@ -5,112 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/23 22:33:36 by myazawa           #+#    #+#             */
-/*   Updated: 2026/07/01 18:32:37 by mumei            ###   ########.fr       */
+/*   Created: 2026/07/08 17:28:50 by mumei             #+#    #+#             */
+/*   Updated: 2026/07/08 18:16:32 by mumei            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "get_next_line.h"
-// #define FLAG_DUP 1
-// #define FLAG_JOIN -1
+#include "get_next_line.h"
 
-// char	*get_next_line(int fd)
-// {
-// 	static char	*save;
-// 	char		*str;
-// 	int			len;
-// 	char		*tmp;
+static char	*trim_save_str(char **save, char **tmp)
+{
+	char	*str;
 
-// 	str = NULL;
-// 	if (save && ft_strchr(save, '\n') != NULL)
-// 	{
-// 		tmp = free_strjoin_dup(save, NULL, FLAG_DUP);
-// 		len = ft_strlen(tmp) - ft_strlen(ft_strchr(tmp, '\n')) + 1;
-// 		save = ft_strdup(ft_strchr(tmp, '\n') + 1);
-// 		str = free_strjoin_dup(tmp, NULL, FLAG_DUP);
-// 		return (sft_substr(str, 0, len));
-// 	}
-// 	else if (save)
-// 		tmp = free_strjoin_dup(save, NULL, FLAG_DUP);
-// 	str = save_str(tmp, fd);
-// 	if (ft_strchr(str, '\n') == NULL)
-// 		return (str);
-// 	len = ft_strlen(str) - ft_strlen(ft_strchr(str, '\n')) + 1;
-// 	save = free_strjoin_dup(str, NULL, FLAG_DUP);
-// 	return (ft_substr(str, 0, len));
-// }
+	str = ft_substr_free(*tmp, 0, ft_strlen(*tmp) - ft_strlen(ft_strchr(tmp,
+					'\n')) + 1);
+	*save = ft_substr_free(*tmp, ft_strlen(ft_strchr(*tmp, '\n')),
+			ft_strlen(ft_strchr(*tmp, '\n')) - 1);
+	return (str);
+}
 
-// static char	*save_str(char *str, int fd)
-// {
-// 	char	*buf;
-// 	char	*tmp;
-// 	int		byts;
+static char	*buf_to_str(char **tmp, char **save, int fd)
+{
+	char	*buf;
+	char	*str;
+	int		byts;
 
-// 	byts = 1;
-// 	buf = readbuf(fd);
-// 	if (!buf)
-// 		return (NULL);
-// 	if (!str)
-// 		str = free_strjoin_dup(buf, NULL, FLAG_DUP);
-// 	else
-// 	{
-// 		tmp = str;
-// 		str = free_strjoin_dup(tmp, buf, FLAG_JOIN);
-// 	}
-// 	while (byts > 0 && ft_strchr(buf, '\n') == NULL)
-// 	{
-// 		byts = read(fd, buf, BUFFER_SIZE);
-// 		buf[byts] = '\0';
-// 		tmp = str;
-// 		str = free_strjoin_dup(tmp, buf, FLAG_JOIN);
-// 	}
-// 	free(buf);
-// 	return (str);
-// }
+	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	byts = read(fd, buf, BUFFER_SIZE);
+	if (byts < 0)
+		return (negbyts_free(&buf, &str));
+	buf[byts] = '\0';
+	str = ft_strjoin_free(tmp, buf);
+	while (byts > 0 && ft_strchr(str, '\n') == NULL)
+	{
+		byts = read(fd, buf, BUFFER_SIZE);
+		if (byts < 0)
+			return (negbyts_free(&buf, &str));
+		buf[byts] = '\0';
+		str = ft_strjoin_free(str, buf);
+	}
+	free(buf);
+	if (byts == 0)
+		return (str);
+	return (trim_save_str(&save, &str));
+}
 
-// char	*readbuf(int fd)
-// {
-// 	int		byts;
-// 	char	*buf;
+static char	*negbyts_free(char **buf, char **str)
+{
+	free(*buf);
+	free(*str);
+	return (NULL);
+}
 
-// 	buf = malloc(sizeof(char) * (BUFFER_SIZE) + 1);
-// 	if (!buf)
-// 		return (NULL);
-// 	byts = read(fd, buf, BUFFER_SIZE);
-// 	if (byts < 0)
-// 	{
-// 		free(buf);
-// 		return (NULL);
-// 	}
-// 	buf[byts] = '\0';
-// 	return (buf);
-// }
+char	*get_next_line(int fd)
+{
+	static char	*save;
+	char		*tmp;
+	char		*str;
 
-// static char	*free_strjoin_dup(char *s1, char *s2, int frag)
-// {
-// 	char	*str;
-
-// 	if (!s1)
-// 		return (NULL);
-// 	if (frag == FLAG_DUP || !s2)
-// 	{
-// 		str = ft_strdup(s1);
-// 		free(s1);
-// 	}
-// 	if (frag == FLAG_JOIN)
-// 	{
-// 		str = ft_strjoin(s1, s2);
-// 		free(s1);
-// 		free(s2);
-// 	}
-// 	return (str);
-// }
-
-// static char	*free_substr(char *s, unsigned int start, size_t len)
-// {
-// 	char	str;
-
-// 	str = ft_substr(s, start, len);
-// 	free(s);
-// 	return (str);
-// }
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (save)
+	{
+		tmp = ft_strdup(save);
+		free(save);
+		if (ft_strchr(save, '\n') != NULL)
+			return (trim_save_str(&save, &tmp));
+		else
+			save = NULL;
+	}
+	else
+		tmp = NULL;
+	return (buf_to_str(&tmp, &save, fd));
+}
