@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mumei <mumei@student.42.fr>                +#+  +:+       +#+        */
+/*   By: myazawa <myazawa@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 21:17:17 by myazawa           #+#    #+#             */
-/*   Updated: 2026/07/08 17:46:21 by mumei            ###   ########.fr       */
+/*   Updated: 2026/07/08 19:46:30 by myazawa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_substr_free(char *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -86,7 +86,6 @@ char	*ft_substr_free(char *s, unsigned int start, size_t len)
 		i++;
 	}
 	str[i] = '\0';
-	free(s);
 	return (str);
 }
 

@@ -4,7 +4,7 @@ CC 	    = cc
 CFLAGS  = -Wall -Wextra -Werror
 RM  	= rm -f
 AR 	    = ar rcs
-SRCS	= get_next_line.c get_next_line_utils.c get_next_line2.c
+SRCS	= get_next_line.c get_next_line_utils.c
 
 OBJS    =$(SRCS:.c=.o)
 
